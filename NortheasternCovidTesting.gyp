@@ -35,10 +35,7 @@ df = pd.DataFrame(data, columns=['Date', 'Tests Completed', 'Negative Tests', 'N
 df['Date'] = pd.to_datetime(df['Date'])
 df = df.set_index('Date')
 
-# Up next: create a graph showing the trend of positive transmission over date
-# Add in a line marking the number of positive cases there would be with usual covid spread rates
-
-# Create positive transmission rate graph
+# Create graph showing comparison of positive transmission rates between NU and MA
 x_values = df.index.values # Want to remove the year from this
 nu_transmission = [float(rate[:-1]) for rate in df['Positive Rate']] # convert string data to floats
 ma_transmission = [float(rate[:-1]) for rate in df['MA Positive Rate']]
