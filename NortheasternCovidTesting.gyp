@@ -53,6 +53,8 @@ df['Susceptible Population'] = 0
 df['Total Infected'] = 0
 df['Change in Susceptible'] = 0
 df['Actual Change in Susceptible'] = 0
+df['Number of Recovered'] = 0
+
 
 def find_total_population():
     '''
@@ -89,9 +91,10 @@ def find_total_infected():
 
         i += 1
 
+
 def find_susceptible_population():
     '''
-    Find the actual number of susceptible people each day
+    Find the actual number of susceptible people each day, making assumption that recovered people are immune
     '''
     i = 0
     while (i < len(df.index)): 
@@ -128,6 +131,7 @@ def number_of_infected():
     variable = 5
     print(type(variable))
 
+
 def change_in_susceptible():
     '''
     Using the S' function in the SIR model to find the rate of change inthe susceptible population
@@ -148,6 +152,7 @@ find_total_population()
 find_total_infected()
 find_susceptible_population()
 actual_change_in_susceptible()
+# number_of_infected()
 # change_in_susceptible()
 print(df)
 
@@ -169,11 +174,6 @@ plt.ylabel('Positive Transmission Rate')
 plt.title('Positive Transmission Rate at Northeastern University compared to MA')
 plt.legend(frameon=False)
 plt.show()
-
-# Create positive number of cases compared to what would be expected with MA transmission rates
-
-
-
 
 
 ##############
