@@ -8,8 +8,8 @@ used in this project is taken from the Northeastern Covid Testing dashboard foun
 https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/
 Permission was given by news.northeastern to use the data. 
 
-The first graph shows the trend in positive transmission rates for both the university and the state of Massachusetts.
+The first goal of this program is to make a graph that shows the trend in positive transmission rates
+for both the university and the state of Massachusetts.
 
-The second graph (under construction) aims to show the number of positive cases at Northeastern with the expected
-number of positive cases assuming Northeastern had the same rate of transmission as the entire state of
-Massachusetts. 
+The second goal of the program is to try to create an accurate model to predict the number
+of cases the following day with the given information  

@@ -1,25 +1,29 @@
 '''
-Web Scraper to obtain and compare Northeastern's tesing and covid cases to MA average and what would be expected
-without the implemented precautions
-
-Steps:
-- Create a graph of the number of positive tests compared to what would be expected
+Web Scraper to obtain and analyze Northeastern's covid testing strategy
 '''
+
+##############
+# Import Libraries
+##############
 
 import pandas as pd
 from bs4 import BeautifulSoup
 import urllib.request
-from selenium import webdriver # this is to access the js created elements on the webpage
+from selenium import webdriver
 import time
 import matplotlib.pyplot as plt 
 import math
 
-# The code to scrape data on this page was modeled after the code in the following article by Kerry Parker:
-# https://towardsdatascience.com/data-science-skills-web-scraping-javascript-using-python-97a29738353f
+
+##############
+# Scrape data from news.northeastern covid testing dashboard
+##############
+
+# Code adapted from (Parker, 2020)
 urlpage = 'https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/'
 driver = webdriver.Firefox(executable_path='/Users/tomcairns/Desktop/Random Projects/JSScraper/geckodriver')
 driver.get(urlpage) # Want to figure out how to hide this
-time.sleep(3)
+time.sleep(2)
 
 # Obtain the data from the table
 rows = driver.find_elements_by_xpath('//*[@id="dashboard-grid"]/div[5]/table/tbody/tr')
@@ -38,10 +42,18 @@ df['Date'] = pd.to_datetime(df['Date'])
 df = df.reindex(index=df.index[::-1]) # Have to reverse DataFrame so it goes from oldest date to most recent
 df.reset_index(inplace=True, drop=True)
 
-# Find the susceptible population for each day
-df['Total Population'] = 0
 
-# This function finds the total population on campus for any given day, not number of susceptible individuals
+##############
+# Calculate Susceptible, Infected, and Recovered Populations
+##############
+
+# Initialize New Columns in df
+df['Total Population'] = 0
+df['Susceptible Population'] = 0
+df['Total Infected'] = 0
+df['Change in Susceptible'] = 0
+df['Actual Change in Susceptible'] = 0
+
 def find_total_population():
     '''
     This function seeks to determine the number of total individuals on campus any particular day. This assumes that people
@@ -63,11 +75,6 @@ def find_total_population():
                 df.loc[(i - 3), 'Total Population'])
         i += 1
 
-# Find the rate of change for SIR model for each day
-df['Susceptible Population'] = 0
-df['Total Infected'] = 0
-df['Change in Susceptible'] = 0
-df['Actual Change in Susceptible'] = 0
 
 def find_total_infected():
     '''
@@ -95,8 +102,7 @@ def find_susceptible_population():
 
 def actual_change_in_susceptible():
     '''
-    This function uses the S' function in the SIR model to find the rate of change in the susceptible population
-    I might be able to compare it to the actual value to see how accurate it is / maybe adjust values of B
+    Find the actual rate of change in the susceptible population
     '''
     i = 0
     while (i < len(df.index)):
@@ -107,20 +113,35 @@ def actual_change_in_susceptible():
             # Making it 0 for now since I don't know how to find rate of change when population is increasing
         else:
             # This will include first day of total population, but ignore that change for now
-            df.loc[i, 'Actual Change in Susceptible'] = df.loc[i - 1, 'Susceptible Population'] - \
-                df.loc[i, 'Susceptible Population']  
+            df.loc[i, 'Actual Change in Susceptible'] = df.loc[i, 'Susceptible Population'] - \
+                df.loc[i - 1, 'Susceptible Population']
 
         i += 1
 
 
+def number_of_infected():
+    '''
+    Find the number of actively infected people, assuming 14 day recovery
+    '''
+    # I might have to first find the rate of change of Infected and then multiply that number by the number of infected? 
+    # Need more thinking
+    variable = 5
+    print(type(variable))
 
-# I think a good idea would be to go through the more basic equations in the SIR model
-# calculate the change in susceptible population, use that to figure out number of infected
-# also can figure out the number of recovered. I really want to see if I can model the day-by-day change
-# like can I make a model that can accurately predict the number of cases that will be found tomorrow? The next day?
-# How many days in the future? And then based on that can I look at the long term projections to see how many
-# people might be infected by the end of the semester? Could be helpful to figure out if the current strategies
-# are effective or if they need to be changed. 
+def change_in_susceptible():
+    '''
+    Using the S' function in the SIR model to find the rate of change inthe susceptible population
+    '''
+    if i == 0:
+        df.loc[i, 'Change in Susceptible'] = 0
+    elif df.loc[i, 'Total Population'] < max(df['Total Population']):
+        df.loc[i, 'Change in Susceptible'] = 0 # Not sure how I would change this
+    else:
+        # This will include first day of total population, ignore that rate of change for now
+        positive_rate = df.loc[i, 'Positive Rate']
+        susceptible_population = df.loc[i, 'Susceptible Population']
+        # Need to find number of infected before implementing this
+
 
 # Run the functions
 find_total_population()
@@ -130,8 +151,10 @@ actual_change_in_susceptible()
 # change_in_susceptible()
 print(df)
 
-# expected_infected() # All the issues, need to make sure equation is right and model is correct
-# print(df)
+
+##############
+# Create Graphs
+##############
 
 # Create graph showing comparison of positive transmission rates between NU and MA
 x_values = df['Date'].values # Want to remove the year from this
@@ -150,3 +173,12 @@ plt.show()
 # Create positive number of cases compared to what would be expected with MA transmission rates
 
 
+
+
+
+##############
+# Sources
+##############
+
+# Parker, K. (2020, June 25). Data Science Skills: Web scraping javascript using python. Retrieved September 27, 2020, 
+# from https://towardsdatascience.com/data-science-skills-web-scraping-javascript-using-python-97a29738353f
