@@ -23,7 +23,7 @@ import math
 urlpage = 'https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/'
 driver = webdriver.Firefox(executable_path='/Users/tomcairns/Desktop/Random Projects/JSScraper/geckodriver')
 driver.get(urlpage) # Want to figure out how to hide this
-time.sleep(2)
+time.sleep(1)
 
 # Obtain the data from the table
 rows = driver.find_elements_by_xpath('//*[@id="dashboard-grid"]/div[5]/table/tbody/tr')
@@ -42,6 +42,18 @@ df['Date'] = pd.to_datetime(df['Date'])
 df = df.reindex(index=df.index[::-1]) # Have to reverse DataFrame so it goes from oldest date to most recent
 df.reset_index(inplace=True, drop=True)
 
+# Add in the columns for change in transmission rate for MA and NU
+df['NU RoC'] = 0
+df['MA RoC'] = 0
+
+for row in df.index:
+    if row != 0:
+        print(f"The positive rate is {df['Positive Rate'][row][:-1]}")
+        print(f"The positive rate from the day before is {df['Positive Rate'][row - 1][:-1]}")
+        df.loc[row, 'NU RoC'] = float(df.loc[row, 'Positive Rate'][:-1]) - float(df.loc[row - 1, 'Positive Rate'][:-1])
+        df.loc[row, 'MA RoC'] = float(df.loc[row, 'MA Positive Rate'][:-1]) - float(df.loc[row - 1, 'MA Positive Rate'][:-1])
+        
+
 ###################
 # Visualize Results
 ###################
@@ -59,6 +71,21 @@ plt.ylabel('% Positive Transmission Rate')
 plt.title('Positive Transmission Rate at Northeastern University compared to MA')
 plt.legend(frameon=False)
 plt.show()
+
+
+# Create graph showing the rate of change in the positive transmission rates between NU and MA
+nu_roc = [rate for rate in df['NU RoC']]
+ma_roc = [rate for rate in df['MA RoC']]
+
+plt.plot(x_values, nu_roc, color='red', label='NU Transmission Rate of Change')
+plt.plot(x_values, ma_roc, color='blue', label='MA Transmission Rate of Change')
+plt.xlabel('Date')
+plt.xticks(rotation=65)
+plt.ylabel('Positive Transmission Rate of Change')
+plt.title('Positive Transmission Rate of Change at Northeastern University compared to MA')
+plt.legend(frameon=False)
+plt.show()
+
 
 
 #########
