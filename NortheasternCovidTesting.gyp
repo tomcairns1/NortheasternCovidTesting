@@ -48,8 +48,6 @@ df['MA RoC'] = 0
 
 for row in df.index:
     if row != 0:
-        print(f"The positive rate is {df['Positive Rate'][row][:-1]}")
-        print(f"The positive rate from the day before is {df['Positive Rate'][row - 1][:-1]}")
         df.loc[row, 'NU RoC'] = float(df.loc[row, 'Positive Rate'][:-1]) - float(df.loc[row - 1, 'Positive Rate'][:-1])
         df.loc[row, 'MA RoC'] = float(df.loc[row, 'MA Positive Rate'][:-1]) - float(df.loc[row - 1, 'MA Positive Rate'][:-1])
         
@@ -88,9 +86,9 @@ plt.show()
 
 
 
-#########
+##########
 # Sources
-#########
+##########
 
 # Parker, K. (2020, June 25). Data Science Skills: Web scraping javascript using python. Retrieved September 27, 2020, 
 # from https://towardsdatascience.com/data-science-skills-web-scraping-javascript-using-python-97a29738353f
