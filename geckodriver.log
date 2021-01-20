@@ -32,3 +32,44 @@ console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Err
 1606764922714	Marionette	INFO	Listening on port 54824
 1606764922772	Marionette	WARN	TLS certificate errors will be ignored for this session
 1606764928213	Marionette	INFO	Stopped listening on port 54824
+1607114789506	geckodriver	INFO	Listening on 127.0.0.1:59956
+1607114790428	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mb/qljq7hv93v3f83gwsk_tqlgr0000gn/T/rust_mozprofileIL1H6Z"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1607114798092	Marionette	INFO	Listening on port 59963
+1607114951226	Marionette	INFO	Stopped listening on port 59963
+1607114955663	geckodriver	INFO	Listening on 127.0.0.1:60160
+1607114956668	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mb/qljq7hv93v3f83gwsk_tqlgr0000gn/T/rust_mozprofileHXevB0"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1607114959750	Marionette	INFO	Listening on port 60167
+1607114959782	Marionette	WARN	TLS certificate errors will be ignored for this session
+1607114965804	Marionette	INFO	Stopped listening on port 60167
+1607382462068	geckodriver	INFO	Listening on 127.0.0.1:52336
+1607382463063	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mb/qljq7hv93v3f83gwsk_tqlgr0000gn/T/rust_mozprofileSvBqAZ"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1607382467728	Marionette	INFO	Listening on port 52343
+1607382467817	Marionette	WARN	TLS certificate errors will be ignored for this session
+1607382615253	Marionette	INFO	Stopped listening on port 52343
+1607382621373	geckodriver	INFO	Listening on 127.0.0.1:52505
+1607382622373	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mb/qljq7hv93v3f83gwsk_tqlgr0000gn/T/rust_mozprofilepqEi77"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1607382626650	Marionette	INFO	Listening on port 52512
+1607382626790	Marionette	WARN	TLS certificate errors will be ignored for this session
+1607382665283	Marionette	INFO	Stopped listening on port 52512
+1607557827944	geckodriver	INFO	Listening on 127.0.0.1:49300
+1607557828941	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mb/qljq7hv93v3f83gwsk_tqlgr0000gn/T/rust_mozprofileJ0pDHR"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1607557835145	Marionette	INFO	Listening on port 49312
+1607557835256	Marionette	WARN	TLS certificate errors will be ignored for this session
+1607557849703	Marionette	INFO	Stopped listening on port 49312
+1607557943055	geckodriver	INFO	Listening on 127.0.0.1:49495
+1607557944054	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/mb/qljq7hv93v3f83gwsk_tqlgr0000gn/T/rust_mozprofileheESmU"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1607557950833	Marionette	INFO	Listening on port 49506
+1607557951003	Marionette	WARN	TLS certificate errors will be ignored for this session
+1607557960743	Marionette	INFO	Stopped listening on port 49506
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
