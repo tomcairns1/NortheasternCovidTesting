@@ -1,0 +1,45 @@
+---
+title: 'Northeastern Covid Testing'
+author: Tom Cairns
+output: html_document
+---
+
+## Overview
+The purpose of this script is to scrape the Northeastern University Testing
+Dashboard: https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/
+and to analyze the transmission rate over the semester.
+
+## Methods
+
+*Scrape the Data*
+I cannot scrape this data in R because it is stored in a javascript file. So I
+have to first scrape the data using Python and then import the scraped data into
+this file.
+
+```{r, echo=FALSE, message=FALSE}
+# Load the necessary libraries
+library(tidyverse)
+library(rvest)
+library(xml2)
+```
+
+```{r}
+# The URL
+nu.url <- 'https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/'
+
+# Read in the file
+nutesting <- read_html(nu.url)
+
+# Get to the correct node
+#-------------------------
+# Get the body nodes
+
+body_nodes <- nutesting %>%
+    html_node('body') %>%
+    html_children()
+
+table <- nutesting %>%
+    html_node('body') %>%
+    xml_find_all("//span[contains(@table, 'svelte-w7dofd')]")
+
+```

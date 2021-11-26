@@ -21,8 +21,7 @@ import math
 
 # Code adapted from (Parker, 2020)
 urlpage = 'https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/'
-# driver = webdriver.Firefox(executable_path='/Users/tomcairns/Desktop/Random Projects/JSScraper/geckodriver')
-driver = webdriver.Firefox(executable_path='/Users/tomcairns/Desktop/random_projects/')
+driver = webdriver.Firefox(executable_path='/Users/tomcairns/Desktop/Random Projects/JSScraper/geckodriver')
 driver.get(urlpage) # Want to figure out how to hide this
 time.sleep(1)
 
