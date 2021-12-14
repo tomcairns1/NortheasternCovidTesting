@@ -21,7 +21,7 @@ import math
 
 # Code adapted from (Parker, 2020)
 urlpage = 'https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/'
-driver = webdriver.Firefox(executable_path='/Users/tomcairns/Desktop/Random Projects/JSScraper/geckodriver')
+driver = webdriver.Firefox(executable_path='/Users/tomcairns/Downloads/geckodriver')
 driver.get(urlpage) # Want to figure out how to hide this
 time.sleep(1)
 
@@ -57,32 +57,32 @@ for row in df.index:
 ###################
 
 # Create graph showing positive transmission rates at NU
-x_values = df['Date'].values # Want to remove the year from this
-nu_transmission = [float(rate[:-1]) for rate in df['Positive Rate']] # convert string data to floats
-# ma_transmission = [float(rate[:-1]) for rate in df['MA Positive Rate']]
-
-plt.plot(x_values, nu_transmission, color='red', label='NU Transmission Rate')
-# plt.plot(x_values, ma_transmission, color='blue', label='MA Transmission Rate')
-plt.xlabel('Date')
-plt.xticks(rotation=65)
-plt.ylabel('% Positive Transmission Rate')
-plt.title('Positive Transmission Rate at Northeastern University')
-plt.legend(frameon=False)
-plt.show()
-
-
-# Create graph showing the rate of change in the positive transmission rates at NU
-nu_roc = [rate for rate in df['NU RoC']]
-# ma_roc = [rate for rate in df['MA RoC']]
-
-plt.plot(x_values, nu_roc, color='red', label='NU Transmission Rate of Change')
-# plt.plot(x_values, ma_roc, color='blue', label='MA Transmission Rate of Change')
-plt.xlabel('Date')
-plt.xticks(rotation=65)
-plt.ylabel('Positive Transmission Rate of Change')
-plt.title('Positive Transmission Rate of Change at Northeastern University')
-plt.legend(frameon=False)
-plt.show()
+##x_values = df['Date'].values # Want to remove the year from this
+##nu_transmission = [float(rate[:-1]) for rate in df['Positive Rate']] # convert string data to floats
+### ma_transmission = [float(rate[:-1]) for rate in df['MA Positive Rate']]
+##
+##plt.plot(x_values, nu_transmission, color='red', label='NU Transmission Rate')
+### plt.plot(x_values, ma_transmission, color='blue', label='MA Transmission Rate')
+##plt.xlabel('Date')
+##plt.xticks(rotation=65)
+##plt.ylabel('% Positive Transmission Rate')
+##plt.title('Positive Transmission Rate at Northeastern University')
+##plt.legend(frameon=False)
+##plt.show()
+##
+##
+### Create graph showing the rate of change in the positive transmission rates at NU
+##nu_roc = [rate for rate in df['NU RoC']]
+### ma_roc = [rate for rate in df['MA RoC']]
+##
+##plt.plot(x_values, nu_roc, color='red', label='NU Transmission Rate of Change')
+### plt.plot(x_values, ma_roc, color='blue', label='MA Transmission Rate of Change')
+##plt.xlabel('Date')
+##plt.xticks(rotation=65)
+##plt.ylabel('Positive Transmission Rate of Change')
+##plt.title('Positive Transmission Rate of Change at Northeastern University')
+##plt.legend(frameon=False)
+##plt.show()
 
 
 
