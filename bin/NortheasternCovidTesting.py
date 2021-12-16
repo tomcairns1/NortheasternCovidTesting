@@ -64,16 +64,38 @@ def findRows(driver):
     Outputs: Data (list)
     Purpose: This function finds the rows in the website and saves to a dataframe
     '''
-    # rows = driver.find_elements_by_xpath('//*[@id="dashboard-grid"]/div[5]/table/tbody/tr')
-    rows = driver.find_elements_by_xpath('//*[@id="data-table"]/')
+    _clickButton(driver)
+    rows = driver.find_elements_by_xpath('//*[@id="data-table"]/div/table/tbody')
 
     # Save to a dataframe
-    data = []
     for row in rows:
+        print(f'row = {row}')
         row_text = row.text.split()
-        data.append(row_text)
+        print(f'Row text is {row_text}')
 
-    return data
+    return row_text
+
+
+def _clickButton(driver):
+    ''' 
+    Function: _clickButton
+    Paramters: driver (webdriver)
+    Outputs: None
+    Purpose: This function clicks the "Show More" button to get the whole table
+    Code adapted from [2]
+    '''
+    cookie_button = driver.find_elements_by_xpath('/html/body/div[4]/button')[0]
+    print(f'Cookie button: {cookie_button}')
+    cookie_button.click()
+
+    # Sleep for a second
+    time.sleep(3)
+
+    # Get the location of the button
+    load_more_btn = driver.find_elements_by_xpath('/html/body/div[1]/main/article/div[3]/div/div[2]/div/section[6]/button')[0]
+
+    # Click the button
+    load_more_btn.click()
 
 
 def convertToDataframe(dataset):
@@ -83,8 +105,11 @@ def convertToDataframe(dataset):
     Outputs: df (dataframe)
     Purpose: This function converts the row data to a dataframe
     '''
+    # Convert to a list of lists
+    dataset_lol = _buildListofLists(dataset)
+
     # Convert to data frame
-    df = pd.DataFrame(dataset, columns=['Date', 'Tests Completed', 'Negative Tests', 
+    df = pd.DataFrame(dataset_lol, columns=['Date', 'Tests Completed', 'Negative Tests', 
                                      'Negative Rate', 'Positive Tests', 
                                      'Positive Rate'])
 
@@ -96,6 +121,20 @@ def convertToDataframe(dataset):
     df.reset_index(inplace=True, drop=True)
 
     return df
+
+
+def _buildListofLists(dataset):
+    ''' 
+    Function: _buildListofLists
+    Parameters: dataset (list)
+    Outputs: dataset_lol (list of lists)
+    Purpose: This function converts the list into a list of lists to later be
+    converted into a dataframe
+    '''
+    # Convert to list of lists
+    dataset_lol = [dataset[x : x+6] for x in range(0, len(dataset), 6)]
+
+    return dataset_lol
 
 
 def findRateOfChange(dataframe):
@@ -173,6 +212,11 @@ if __name__ == '__main__':
 # Sources
 ##########
 
-# Parker, K. (2020, June 25). Data Science Skills: Web scraping javascript using 
-# python. Retrieved September 27, 2020, from 
-# https://towardsdatascience.com/data-science-skills-web-scraping-javascript-using-python-97a29738353f
+'''
+[1] Parker, K. (2020, June 25). Data Science Skills: Web scraping javascript using 
+python. Retrieved September 27, 2020, from 
+https://towardsdatascience.com/data-science-skills-web-scraping-javascript-using-python-97a29738353f
+
+[2] https://stackoverflow.com/questions/37341667/click-on-show-more-button-on-nytimes-com-with-selenium
+'''
+
