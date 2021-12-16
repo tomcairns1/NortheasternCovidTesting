@@ -23,11 +23,15 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
+###########
+# Main Code
+###########
+
 def main():
     '''Business Logic'''
     # Read in the command line arguments
     args = get_cli()
-    print(f"Command Arguments are: {args}")
+    print(f'Command line arguments are: {args[0]}')
 
     # Code adapted from (Parker, 2020)
     urlpage = 'https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/'
@@ -37,23 +41,19 @@ def main():
 
     # Obtain the data from the table
     data = findRows(driver)
-    print(f"First data: {data}")
-    # This did not properly scrape
 
     # Close the driver
     driver.quit()
 
     # Change data into a dataframe
     df = convertToDataframe(data)
-    print(f"When Converted to df: {df}")
 
     # Find the rate of change
     df = findRateOfChange(df)
-    print(f"Incuding the rate of Change: {df}")
 
     # Save to File
     df.to_csv(args.output)
-    print('success')
+    print('\nWeb Scrape Successful!')
 
 
 
@@ -64,14 +64,14 @@ def findRows(driver):
     Outputs: Data (list)
     Purpose: This function finds the rows in the website and saves to a dataframe
     '''
+    # Click the buttons to expand the view
     _clickButton(driver)
-    rows = driver.find_elements_by_xpath('//*[@id="data-table"]/div/table/tbody')
+
+    # Obtain the data from the table
+    rows = driver.find_elements_by_xpath('//*[@id="data-table"]/div/table/tbody')[0]
 
     # Save to a dataframe
-    for row in rows:
-        print(f'row = {row}')
-        row_text = row.text.split()
-        print(f'Row text is {row_text}')
+    row_text = rows.text.split()
 
     return row_text
 
@@ -84,17 +84,15 @@ def _clickButton(driver):
     Purpose: This function clicks the "Show More" button to get the whole table
     Code adapted from [2]
     '''
+    # Click "Accept Cookies" button
     cookie_button = driver.find_elements_by_xpath('/html/body/div[4]/button')[0]
-    print(f'Cookie button: {cookie_button}')
     cookie_button.click()
 
     # Sleep for a second
     time.sleep(3)
 
-    # Get the location of the button
+    # Click "Load More" button
     load_more_btn = driver.find_elements_by_xpath('/html/body/div[1]/main/article/div[3]/div/div[2]/div/section[6]/button')[0]
-
-    # Click the button
     load_more_btn.click()
 
 
@@ -109,9 +107,9 @@ def convertToDataframe(dataset):
     dataset_lol = _buildListofLists(dataset)
 
     # Convert to data frame
-    df = pd.DataFrame(dataset_lol, columns=['Date', 'Tests Completed', 'Negative Tests', 
-                                     'Negative Rate', 'Positive Tests', 
-                                     'Positive Rate'])
+    df = pd.DataFrame(dataset_lol, columns=['Date', 'Tests Completed', 
+                                            'Negative Tests', 'Negative Rate', 
+                                            'Positive Tests', 'Positive Rate'])
 
     # Convert date to datetime
     df['Date'] = pd.to_datetime(df['Date'])
@@ -145,11 +143,11 @@ def findRateOfChange(dataframe):
     Purpose: This function finds the rate of change in the positive transmission rate
     '''
     dataframe['NU RoC'] = 0
-    # df['MA RoC'] = 0
 
     # Calculate the rate of change
     for row in dataframe.index:
         if row != 0:
+            # This could be made another helper function
             dataframe.loc[row, 'NU RoC'] = float(dataframe.loc[row, 'Positive Rate'][:-1]) - float(dataframe.loc[row - 1, 'Positive Rate'][:-1])
 
     return dataframe
@@ -171,41 +169,8 @@ def get_cli():
     return parser.parse_args()
 
 
-############################################################
-# Scrape data from news.northeastern covid testing dashboard
-############################################################
-
-# Obtain the data from the table
-# rows = driver.find_elements_by_xpath('//*[@id="dashboard-grid"]/div[5]/table/tbody/tr')
-# data = []
-# for row in rows:
-#     row_text = row.text.split() # Split all the data from the row
-#     data.append(row_text)
-
-# # Close driver
-# driver.quit()
-
-# # Save the data to a pandas df and convert date column to datetime
-# df = pd.DataFrame(data, columns=['Date', 'Tests Completed', 'Negative Tests', 
-# 'Negative Rate', 'Positive Tests', 'Positive Rate'])
-# df['Date'] = pd.to_datetime(df['Date'])
-# df = df.reindex(index=df.index[::-1]) # Have to reverse DataFrame so it goes from oldest date to most recent
-# df.reset_index(inplace=True, drop=True)
-
-# Add in the columns for change in transmission rate for MA and NU
-# df['NU RoC'] = 0
-# df['MA RoC'] = 0
-
-# for row in df.index:
-#     if row != 0:
-#         df.loc[row, 'NU RoC'] = float(df.loc[row, 'Positive Rate'][:-1]) - float(df.loc[row - 1, 'Positive Rate'][:-1])
-        # df.loc[row, 'MA RoC'] = float(df.loc[row, 'MA Positive Rate'][:-1]) - float(df.loc[row - 1, 'MA Positive Rate'][:-1])
-        
-
 if __name__ == '__main__':
     main()
-
-
 
 
 ##########
