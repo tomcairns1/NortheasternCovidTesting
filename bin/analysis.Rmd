@@ -1,0 +1,33 @@
+---
+title: 'Northeastern Covid Testing Analysis'
+author: Tom Cairns
+output: html_document
+---
+
+## Overview
+This file serves as the analysis for the Northeastern Covid Testing data. The
+data was scraped from the Northeastern Covid Testing Dashboard and will serve
+as the beginning of the analysis. In future versions I will turn this analysis
+into a regular R file that I can build a pipeline around.
+
+## Methods
+*Import the Data*
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+```{r}
+filepath = '../data/output.csv'
+covid_data = read_csv(filepath)
+```
+
+*First Pass*
+```{r}
+covid_data %>%
+    mutate(`Positive Rate` = as.double(str_extract(`Positive Rate`, '[0-9]+.[0-9]'))) %>%
+    ggplot() +
+    geom_line(aes(x = Date, y = `Positive Rate`), color = 'firebrick') +
+    theme(panel.background = element_blank(), axis.line = element_line()) +
+    labs(title = 'Positive Rate at Northeastern Over Fall Semester',
+         y = 'Positive Rate (Percent)')
+```
