@@ -14,13 +14,14 @@ $ python3 NortheasternCovidTesting.py --o output.csv
 ##################
 
 import argparse
-import math
+# import math
 import time
-import urllib.request
+# import urllib.request
 import matplotlib.pyplot as plt 
 import pandas as pd
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 from selenium import webdriver
+from os.path import exists
 
 
 ###########
@@ -31,7 +32,6 @@ def main():
     '''Business Logic'''
     # Read in the command line arguments
     args = get_cli()
-    print(f'Command line arguments are: {args[0]}')
 
     # Code adapted from (Parker, 2020)
     urlpage = 'https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/'
@@ -52,7 +52,7 @@ def main():
     df = findRateOfChange(df)
 
     # Save to File
-    df.to_csv(args.output)
+    saveFile(df, args.output)
     print('\nWeb Scrape Successful!')
 
 
@@ -127,7 +127,7 @@ def _buildListofLists(dataset):
     Parameters: dataset (list)
     Outputs: dataset_lol (list of lists)
     Purpose: This function converts the list into a list of lists to later be
-    converted into a dataframe
+             converted into a dataframe
     '''
     # Convert to list of lists
     dataset_lol = [dataset[x : x+6] for x in range(0, len(dataset), 6)]
@@ -140,7 +140,8 @@ def findRateOfChange(dataframe):
     Function: findRateOfChange
     Parameters: dataframe
     Output: dataframe
-    Purpose: This function finds the rate of change in the positive transmission rate
+    Purpose: This function finds the rate of change in the positive transmission 
+             rate
     '''
     dataframe['NU RoC'] = 0
 
@@ -151,6 +152,47 @@ def findRateOfChange(dataframe):
             dataframe.loc[row, 'NU RoC'] = float(dataframe.loc[row, 'Positive Rate'][:-1]) - float(dataframe.loc[row - 1, 'Positive Rate'][:-1])
 
     return dataframe
+
+
+def saveFile(dataframe, output_file):
+    ''' 
+    Parameters: dataframe 
+                output_file (str)
+    Output: None
+    Purpose: Checks if output file exists, if it does it appends, otherwise
+             it writes a new output file
+    '''
+
+    # Check if the file exists
+    if exists(output_file):
+        print('appending')
+        # Append rows
+        _appendRows(dataframe, output_file)
+
+    else:
+        print('New file')
+        dataframe.to_csv(output_file, mode = 'w')
+
+
+def _appendRows(dataframe, output_file):
+    ''' 
+    Parameters: dataframe
+                output_file (str)
+    Output: None
+    Purpose: Finds most recent date in old output file, removes anything before
+             that date in dataframe, appends new data to old data frame
+    '''
+    # Open the output_file
+    output = pd.read_csv(output_file)
+
+    # Find most recent date
+    most_recent_date = output['Date'].max()
+
+    # Remove any rows with a date before the most recent date
+    dataframe = dataframe[dataframe['Date'] > most_recent_date]
+
+    # Append the data to the output file
+    dataframe.to_csv(output_file, mode = 'a', header = False)
 
 
 def get_cli():
