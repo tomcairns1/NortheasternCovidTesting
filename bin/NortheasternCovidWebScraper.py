@@ -14,12 +14,8 @@ $ python3 NortheasternCovidTesting.py --o output.csv
 ##################
 
 import argparse
-# import math
 import time
-# import urllib.request
-import matplotlib.pyplot as plt 
 import pandas as pd
-# from bs4 import BeautifulSoup
 from selenium import webdriver
 from os.path import exists
 
