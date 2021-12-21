@@ -9,9 +9,9 @@ How to Execute:
 $ python3 NortheasternCovidTesting.py --o output.csv
 '''
 
-##################
+###################
 # Import Libraries
-##################
+###################
 
 import argparse
 import time
@@ -20,9 +20,9 @@ from selenium import webdriver
 from os.path import exists
 
 
-###########
+############
 # Main Code
-###########
+############
 
 def main():
     '''Business Logic'''
