@@ -7,6 +7,10 @@ Purpose:
 This script is used to create a database to contain the Northeastern Covid Data
 */
 
+-- Drop tables if they exist
+DROP TABLE IF EXISTS nucase;
+DROP TABLE IF EXISTS macase;
+
 -- Add tables
 CREATE TABLE nucase (
     pk INT NOT NULL,
