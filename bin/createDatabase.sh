@@ -10,6 +10,4 @@
 # bash createDatabase.sh
 
 # Create the database
-sqlite3 ../data/NUCovid.db '.read createDatabase.sql'
-
-
+sqlite3 ../data/NUCovid.db '.read createDatabase.sql' | python3 createDatabase.py
