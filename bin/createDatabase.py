@@ -26,7 +26,7 @@ from sqlite3 import Error
 def main():
     ''' Business Logic '''
     # Create empty database
-    db_filename = 'NUCovid.db'
+    db_filename = '../data/NUCovid.db'
     createEmptyDatabase(db_filename)
 
     # Import the Data
