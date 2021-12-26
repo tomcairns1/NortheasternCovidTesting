@@ -24,10 +24,10 @@ covid_data = read_csv(filepath)
 *First Pass*
 ```{r}
 covid_data %>%
-    mutate(`Positive Rate` = as.double(str_extract(`Positive Rate`, '[0-9]+.[0-9]'))) %>%
+    # mutate(`Positive Rate` = as.double(str_extract(`Positive Rate`, '[0-9]+.[0-9]'))) %>%
     ggplot() +
-    geom_line(aes(x = Date, y = `Positive Rate`), color = 'firebrick') +
+    geom_line(aes(x = Date, y = `Positive Tests`), color = 'firebrick') +
     theme(panel.background = element_blank(), axis.line = element_line()) +
-    labs(title = 'Positive Rate at Northeastern Over Fall Semester',
-         y = 'Positive Rate (Percent)')
+    labs(title = 'Positive Tests at Northeastern Over Fall Semester',
+         y = 'Positive Tests')
 ```
