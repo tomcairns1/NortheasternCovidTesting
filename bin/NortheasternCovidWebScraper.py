@@ -83,7 +83,6 @@ def _clickButton(driver):
     '''
     # Click "Accept Cookies" button
     cookie_button = driver.find_elements_by_xpath('/html/body/div[4]/div')[0]
-    print(f'Cookie Button: {cookie_button}')
     cookie_button.click()
 
     # Sleep for a second
