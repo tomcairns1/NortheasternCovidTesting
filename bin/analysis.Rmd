@@ -28,6 +28,6 @@ covid_data %>%
     ggplot() +
     geom_line(aes(x = Date, y = `Positive Tests`), color = 'firebrick') +
     theme(panel.background = element_blank(), axis.line = element_line()) +
-    labs(title = 'Positive Tests at Northeastern Over Fall Semester',
+    labs(title = 'Positive Tests at Northeastern 2021 - 2022',
          y = 'Positive Tests')
 ```
