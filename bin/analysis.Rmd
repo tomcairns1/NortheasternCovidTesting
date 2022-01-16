@@ -40,7 +40,7 @@ covid_data %>%
     geom_line(aes(x = Date, y = `Positive Tests`), color = 'firebrick',
               group = 1) +
     theme(panel.background = element_blank(), axis.line = element_line()) +
-    labs(title = 'Positive Tests at Northeastern University 2021 - 2022',
+    labs(title = 'Positive COVID-19 Tests at Northeastern University 2021 - 2022',
          y = 'Positive Tests') +
-    scale_x_date(date_breaks = 'months', date_labels = '%b-%y')
+    scale_x_date(date_breaks = 'months', date_labels = '%b')
 ```
