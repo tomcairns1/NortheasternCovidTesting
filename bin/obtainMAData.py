@@ -9,7 +9,7 @@ the state of Massachusetts. It will output the data into a file that can be
 easily added to the database.
 
 How to Execute:
-$ python3 obtainMAData.py --output MAoutput.csv
+$ python3 obtainMAData.py -output ../data/MAoutput.csv
 '''
 
 ###################
@@ -18,6 +18,7 @@ $ python3 obtainMAData.py --output MAoutput.csv
 
 import sys
 import argparse
+import xlrd
 import pandas as pd
 
 
