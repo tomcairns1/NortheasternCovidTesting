@@ -14,20 +14,33 @@ into a regular R file that I can build a pipeline around.
 *Import the Data*
 ```{r, message=FALSE}
 library(tidyverse)
+library(RSQLite)
+library(scales)
+library(lubridate)
 ```
 
 ```{r}
-filepath = '../data/output.csv'
-covid_data = read_csv(filepath)
+# Import from the database
+db <- dbConnect(SQLite(), dbname = '../data/NUCovid.db')
 ```
 
-*First Pass*
+*Positive Tests*
+This first graph is used to show the positive tests at Northeastern. This way
+we can see the number of new positive cases per day to see if there is an
+increase.
 ```{r}
+# Extract data
+sqlCmd <- 'SELECT Date, `Positive Tests` FROM nucase;'
+covid_data <- dbGetQuery(db, sqlCmd)
+
+# Create figure
 covid_data %>%
-    # mutate(`Positive Rate` = as.double(str_extract(`Positive Rate`, '[0-9]+.[0-9]'))) %>%
+    mutate(Date = as_date(Date)) %>%
     ggplot() +
-    geom_line(aes(x = Date, y = `Positive Tests`), color = 'firebrick') +
+    geom_line(aes(x = Date, y = `Positive Tests`), color = 'firebrick',
+              group = 1) +
     theme(panel.background = element_blank(), axis.line = element_line()) +
-    labs(title = 'Positive Tests at Northeastern 2021 - 2022',
-         y = 'Positive Tests')
+    labs(title = 'Positive Tests at Northeastern University 2021 - 2022',
+         y = 'Positive Tests') +
+    scale_x_date(date_breaks = 'months', date_labels = '%b-%y')
 ```
