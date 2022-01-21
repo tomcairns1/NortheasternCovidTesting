@@ -7,15 +7,10 @@ taken as guidance in this pandemic.
 
 
 ## Introduction
-This project aims to answer the question of whether Northeastern University in 
-Boston, MA has an effective Covid strategy. In addition it is used as a way to 
-explore the data and look for trends. This project was created in the fall of 
-2020 when the Covid-19 pandemic continued to get worse, but many colleges had 
-reopened with additional restrictions. Northeastern's strategy involved testing 
-for all students and faculty multiple times a week. It also limited gatherings 
-and required facemasks to be worn at all times on campus. Additionally it 
-implemented it's "NU Flex" learning model which allows students to attend class 
-in person at limited capacity or to attend remotely.
+This project is used to monitor the COVID-19 situation at Northeastern
+University in Boston, MA. I believe the way the university displays and publishes
+their data is not an effective representation. Therefore I have created this
+project to visualize the data myself.
 
 The goal of this program is to visually represent the trends in positive 
 transmission rates and the change in rates between Massachusetts and Northeastern.
@@ -27,14 +22,40 @@ dashboard found at the following URL:
 https://news.northeastern.edu/coronavirus/reopening/testing-dashboard/. 
 Permission was given by news.northeastern to use this data.
 
+*/bin*
+The file `NortheasternCovidWebScraper.py` scrapes the data from this website using 
+webdriver[1]. The code for this section was adapted from Parker 2020. The data 
+was saved to a .csv file called `CopiedData.csv`.
+
+The file `createDatabase.sql` contains the SQLite commands to create the database,
+`NUCovid.db` to store all of the scraped data.
+
+The file `createDatabase.py` is used to take the data from `CopiedData.csv` to
+add to the database file, `NUCovid.db`.
+
+The file `createDatabase.sh` is used to run both database creation files
+(`createDatabase.sql` and `createDatabase.py`).
+
+The file `analysis.R` is used to run the analysis of the data and save the
+associated files into the ../figures directory.
+
+The file `analysis.Rmd` is more exploratory in nature and is used to test the
+code used to create the figures.
+
+The file `pipeline.sh` is used to run the whole pipeline. It scrapes the data
+from the Northeastern website, adds the data to the database, and then analyzes
+the data and saves / updates the figures.
+
+The file `obtainMAData.py` is a file to scrape the data from the Massachusetts
+government and to take the Excel sheet from the file that contains the information
+to then be added to the database.
+
+
+*/data*
 The file `CopiedData.csv` contains the data from Northeastern from Setpember 2,
 2021 to December 10, 2021. This data was directly copied from the website while
 I worked on the web-scraping program. I want to hold onto historical data. This
 data can be used to test how the analysis will be conducted.
-
-The file `NortheasternCovidTesting.py` scrapes the data from this website using 
-webdriver[1]. The code for this section was adapted from Parker 2020. The data 
-was saved to a data frame which was then reversed to be in chronological order. 
 
 
 ## Results
