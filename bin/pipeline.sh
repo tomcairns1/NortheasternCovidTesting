@@ -6,4 +6,8 @@
 
 # Run the pipeline
 # NEED TO UPDATE WITH FILENAMES
-python3 NortheasternCovidWebScraper.py | bash createDatabase.sh | Rscript analysis.R
+python3 NortheasternCovidWebScraper.py 
+
+python3 createDatabase.py
+
+Rscript analysis.R
