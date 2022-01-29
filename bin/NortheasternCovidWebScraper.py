@@ -90,7 +90,7 @@ def _clickButton(driver):
     time.sleep(3)
 
     # Click "Load More" button
-    load_more_btn = driver.find_elements_by_xpath('/html/body/div[1]/main/article/div[3]/div/div[2]/div/section[6]/button')[0]
+    load_more_btn = driver.find_elements_by_xpath('/html/body/div[1]/main/article/div[3]/div/div[2]/div/section[3]/button')[0]
     load_more_btn.click()
 
 
