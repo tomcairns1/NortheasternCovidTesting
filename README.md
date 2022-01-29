@@ -84,6 +84,9 @@ campus. This does lead into a question of whether the MA transmission rate can
 be used to predict the Northeastern transmission rate. That can be something for 
 a later project to focus on.
 
+The figure showing the number of positive tests at Northeastern University:
+![Positive Tests][figures/PositiveTests.png]
+
 
 ## References
 [1] Gojare, S., Joshi, R., &amp; Gaigaware, D. (2015). Analysis and Design of 
