@@ -26,7 +26,7 @@ sqlCmd <- 'SELECT Date, `Positive Tests` FROM nucase;'
 covid_data <- dbGetQuery(db, sqlCmd)
 
 # Create figure
-covid_data %>%
+positive_tests.figure <- covid_data %>%
     mutate(Date = as_date(Date)) %>%
     ggplot(aes(x = Date, y = `Positive Tests`)) +
     geom_line(color = 'firebrick', group = 1) +
