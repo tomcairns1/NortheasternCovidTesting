@@ -14,6 +14,7 @@ into a regular R file that I can build a pipeline around.
 *Import the Data*
 ```{r, message=FALSE}
 library(tidyverse)
+library(tidyquant)
 library(RSQLite)
 library(scales)
 library(lubridate)
@@ -36,11 +37,13 @@ covid_data <- dbGetQuery(db, sqlCmd)
 # Create figure
 covid_data %>%
     mutate(Date = as_date(Date)) %>%
-    ggplot() +
-    geom_line(aes(x = Date, y = `Positive Tests`), color = 'firebrick',
-              group = 1) +
+    ggplot(aes(x = Date, y = `Positive Tests`)) +
+    geom_line(color = 'firebrick', group = 1) +
     theme(panel.background = element_blank(), axis.line = element_line()) +
     labs(title = 'Positive COVID-19 Tests at Northeastern University 2021 - 2022',
-         y = 'Positive Tests') +
-    scale_x_date(date_breaks = 'months', date_labels = '%b')
+         y = 'Positive Tests', caption = 'Blue line represents 7 day rolling average') +
+    scale_x_date(date_breaks = 'months', date_labels = '%b') +
+    
+    # Add moving average
+    geom_ma(ma_fun = SMA, n = 7, color = 'steelblue') 
 ```
