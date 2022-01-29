@@ -85,6 +85,7 @@ be used to predict the Northeastern transmission rate. That can be something for
 a later project to focus on.
 
 The figure showing the number of positive tests at Northeastern University:
+
 ![Positive Tests](figures/PositiveTests.png)
 
 
