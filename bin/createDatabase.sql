@@ -27,6 +27,19 @@ CREATE TABLE nucase (
 CREATE TABLE macase (
     pk INT NOT NULL,
     test_date DATE,
-    positive_rate VARCHAR(255),
+    molecular_new INT,
+    molecular_positive INT,
+    antigen_new INT,
+    antigen_positive INT,
     PRIMARY KEY (pk)
 );
+
+CREATE TABLE maweeklycase (
+    pk INT NOT NULL,
+    city_town VARCHAR(255),
+    population VARCHAR(255),
+    total_cases INT,
+    two_week_case_count INT,
+    average_daily_rate FLOAT,
+    PRIMARY KEY (pk)
+)

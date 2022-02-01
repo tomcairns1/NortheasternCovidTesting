@@ -30,7 +30,10 @@ def main():
     createEmptyDatabase(db_filename)
 
     # Import the Data
-    importData(db_filename)
+    importData(db_filename, '../data/output.csv', 'nucase')
+    importData(db_filename, '../data/weeklyCityReport.csv', 'maweeklycase')
+    importData(db_filename, '../data/weekly/MATestingByDate.csv', 'macase')
+
 
 
 def createEmptyDatabase(db_filename):
@@ -50,19 +53,20 @@ def createEmptyDatabase(db_filename):
             conn.close()
 
 
-def importData(db_filename):
+def importData(db_filename, csv_filename, table_name):
     '''
     Function: importData
     Parameter: db_filename (str)
+               csv_filename (str)
+               table_name (str)
     Purpose: The purpose of this function is to import the data from a
              CSV file into database table
     '''
     # Hardcoding filename for now, will add to pipeline eventually
-    csv_filename = '../data/output.csv'
     nucase_data = pd.read_csv(csv_filename).drop(columns=['Unnamed: 0'])
 
     # Import data into nucase table
-    nucase_data.to_sql('nucase', con=sqlite3.Connection(db_filename),
+    nucase_data.to_sql(table_name, con=sqlite3.Connection(db_filename),
                        if_exists='replace', index=True)
 
 
