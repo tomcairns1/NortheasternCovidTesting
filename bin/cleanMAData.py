@@ -16,6 +16,23 @@ def main():
     args = get_cli()
     print(args)
 
+    for file in args.files:
+        if file == 'weeklyCityReport.csv':
+            cleanWeeklyData(file)
+        elif file == 'MATestingByDate.csv':
+            cleanMAData(file)
+
+
+def cleanWeeklyData(filename):
+    '''
+    Function: cleanWeeklyData
+    Parameters: filename (str)
+    Purpose: Clean the weeklyCityReports.csv file
+    '''
+    # Import the data
+    weeklyData = read_csv(filename, usecols = ['Date', 'Molecular New',
+                                               'Molecular All']) # Finish finding the important columns
+
 
 def get_cli():
     '''

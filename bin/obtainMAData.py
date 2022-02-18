@@ -18,7 +18,7 @@ $ python3 obtainMAData.py -output ../data/MAoutput.csv
 
 import sys
 import argparse
-import xlrd
+# import xlrd
 import pandas as pd
 
 
@@ -31,6 +31,7 @@ def main():
     # Get command line arguments
     args = get_cli()
     print(f'The arguments are:\n{args}')
+    print(f'Input is: {args.input}\n\n')
 
     # Make sure the output is acceptable
     if args.output == 'output.csv':
@@ -42,9 +43,8 @@ def main():
     # file from MA directly
 
     # Read in the worksheet
-    ma_data = pd.read_excel(args.input, engine='openpyxl',
-                            sheet_name='TestingByDate (Test Date)',
-                            usecols='A, C:F, L, M, R, T')
+    ma_data = pd.read_excel(args.input, sheet_name = 24)
+                            # usecols='A, C:F, L, M, R, T')
     print(f'The data is:\n {ma_data.head()}')
 
 
